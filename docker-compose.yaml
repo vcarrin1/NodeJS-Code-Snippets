@@ -1,0 +1,15 @@
+version: '3.9'
+networks:
+  app-network:
+    driver: bridge
+
+services:
+  gcsstorage:
+    image: fsouza/fake-gcs-server:latest
+    ports:
+      - "4443:4443"
+    volumes:
+      - ${PWD}/data:/data/media_assets #default bucket
+    command: ["-scheme", "http", "-port", "4443", "-external-url", "http://localhost:4443", "-backend", "memory"]
+    networks:
+      - app-network

@@ -1,0 +1,12 @@
+{
+    "testEnvironment": "node",
+    "verbose": true,
+    "collectCoverage": true,
+    "coverageDirectory": "coverage",
+    "moduleFileExtensions": ["js", "json", "ts", "tsx", "node"],
+    "testMatch": ["**/tests/**/*.(test).js"],
+    "testPathIgnorePatterns": [
+        "/node_modules/"
+    ],
+    "rootDir": "./"
+}
