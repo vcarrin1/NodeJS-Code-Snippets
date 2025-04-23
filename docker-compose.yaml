@@ -13,3 +13,14 @@ services:
     command: ["-scheme", "http", "-port", "4443", "-external-url", "http://localhost:4443", "-backend", "memory"]
     networks:
       - app-network
+  pubsub:
+    image: google/cloud-sdk:latest
+    entrypoint: gcloud
+    command: ["beta", "emulators", "pubsub", "start", "--host-port=0.0.0.0:8085"]
+    environment:
+      GOOGLE_CLOUD_PROJECT: "test-project"
+      PUBSUB_EMULATOR_HOST: "localhost:8085"
+    ports:
+      - "8085:8085"
+    networks:
+      - app-network
