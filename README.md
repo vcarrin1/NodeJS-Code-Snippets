@@ -9,9 +9,9 @@ Code examples using NodeJS
 ## Pub/Sub
 Pub/Sub (short for Publish/Subscribe) is a messaging pattern used in distributed systems to enable asynchronous communication between components. It decouples the producers (publishers) of messages from the consumers (subscribers), allowing them to operate independently.
 
-Key Concepts:
-**Publisher**: The component that sends messages (events) to a topic. Publishers don't need to know who will consume the messages.
-**Subscriber**: The component that listens for messages from a topic. Subscribers don't need to know who published the messages.
+Key Concepts: \
+**Publisher**: The component that sends messages (events) to a topic. Publishers don't need to know who will consume the messages. \
+**Subscriber**: The component that listens for messages from a topic. Subscribers don't need to know who published the messages. \
 **Topic**: A named channel where messages are sent by publishers and received by subscribers.
 
 <details>
