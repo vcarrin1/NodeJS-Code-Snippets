@@ -4,7 +4,7 @@ const { uploadBufferToBucket, uploadFileToBucket, copyFileToNewPath } = require(
 const bodyParser = require('body-parser');
 const path = require('path');
 const { publishMessage, subscribe, createTopic, createSubscription, listAllTopics } = require('./google-cloud-provider/pub-sub');
-const { log } = require('console');
+const { createTask } = require('./google-cloud-provider/cloud-tasks');
 
 // File filter for multer
 const fileFilter = (req, file, cb) => {
@@ -50,7 +50,42 @@ app.post('/api/upload', upload.single('file'), async (req, res) => {
     const fileName = req.file.originalname;
     // Simulate file upload
     const file = await uploadBufferToBucket(fileBuffer, 'shermans/' + fileName);
+    // send image to cloud task
+    const base64Image = fileBuffer.toString('base64');
+    await createTask({ fileName, base64Image });
+    // Log the file name and size
+    console.log(`File uploaded: ${fileName} (${fileBuffer.length} bytes)`);
     res.send(`File ${file.name} uploaded successfully.`);
+});
+
+/**
+ * Process an image from a Cloud Task.
+ * @param {Object} req - The request object containing the task payload.
+ * @param {Object} res - The response object.
+ */
+app.post('/api/process-image', async (req, res) => {
+    const { fileName, base64Image } = req.body;
+
+    if (!fileName || !base64Image) {
+        return res.status(400).send('File name and base64 image data are required.');
+    }
+
+    try {
+        // Decode the base64 image
+        const imageBuffer = Buffer.from(base64Image, 'base64');
+
+        // Simulate image processing (e.g., resizing, filtering, etc.)
+        console.log(`Processing image: ${fileName} (${imageBuffer.length} bytes)`);
+
+        // Example: Save the processed image to a new path in the bucket
+        const processedFileName = `processed/${fileName}`;
+        await uploadBufferToBucket(imageBuffer, processedFileName);
+
+        res.send(`Image ${fileName} processed and saved as ${processedFileName}.`);
+    } catch (error) {
+        console.error(`Error processing image: ${error.message}`);
+        res.status(500).send('Error processing image.');
+    }
 });
 
 /**

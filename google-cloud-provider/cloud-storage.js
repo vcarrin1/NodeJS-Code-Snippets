@@ -23,7 +23,7 @@ module.exports = storage;
  * @param {string} bucketName - The name of the bucket (default: 'media_assets').
  */
 module.exports.uploadBufferToBucket = async (buffer, bucketPath, bucketName = process.env.DEFAULT_BUCKET_NAME) => {
-    log(`Uploading buffer to bucket ${bucketName} at path ${bucketPath}`);
+    console.log(`Uploading buffer to bucket ${bucketName} at path ${bucketPath}`);
     const bucket = storage.bucket(bucketName);
     const file = bucket.file(bucketPath);
     const options = {
@@ -47,7 +47,7 @@ module.exports.uploadBufferToBucket = async (buffer, bucketPath, bucketName = pr
     * @param {string} bucketName - The name of the bucket (default: 'media-assets').
  */
 module.exports.uploadFileToBucket = async (filePath, bucketPath, bucketName = process.env.DEFAULT_BUCKET_NAME) => {
-    log(`Uploading file ${filePath} to bucket ${bucketName} at path ${bucketPath}`);
+    console.log(`Uploading file ${filePath} to bucket ${bucketName} at path ${bucketPath}`);
     const bucket = storage.bucket(bucketName);
     const file = bucket.file(bucketPath);
     const options = {

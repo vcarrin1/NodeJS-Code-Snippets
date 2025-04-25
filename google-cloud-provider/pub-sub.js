@@ -15,8 +15,6 @@ module.exports.publishMessage = async (topicName, data) => {
     console.log(`Publishing message to topic ${topicName}: ${data}`);
 
     try {
-        console.log(process.env.PROJECT_ID);
-        
         const isAvailable = await gcpMetadata.isAvailable();
         const projectId = await isAvailable ? await gcpMetadata.project('project-id') : process.env.PROJECT_ID;
         const messageId = await pubSubClient
