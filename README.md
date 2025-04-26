@@ -18,16 +18,28 @@ Replace `<bucket-name>` with the name of your storage bucket to access its conte
 
 
 #### 1. Uploads a file
-**Endpoint:** `POST /api/upload`  
-**Description:** Uploads a file as a buffer to the Google Cloud Storage bucket `media-assets`. The file is processed and stored in the specified bucket path, and a cloud task is created with the file's base64-encoded content.
+**Endpoint:** `POST /cloud-storage/upload`  
+**Description:** Uploads a file as a buffer and sends it to Cloud Tasks.
 **Middleware**: `upload.single('file')` (expects a file field named `file` in the request)
 
 ### Request Body
 - **file**: The file to be uploaded (binary data).
 
+#### 2. Process image
+**Endpoint:** `POST /cloud-tasks/process-image`  
+**Description:**  Process an image from a Cloud Task and upload to Cloud Storage bucket `media_assets`.
+**Request Body:**
+- `fileName` (required): File name to be uploaded.
+- `base64Image` (required): The base64-encoded string representation of the image.
+```json
+{
+    "fileName": "string",
+    "base64Image": "string"
+}
+```
 
-#### 2. Rename a folder in Google Cloud Storage media_assets bucket.
-**Endpoint:** `POST /api/copyFileToNewPath`
+#### 3. Rename a folder in Google Cloud Storage media_assets bucket.
+**Endpoint:** `POST /cloud-storage/copyFileToNewPath`
 **Description:** This endpoint is responsible for copying a file from its current location to a new specified path.
 
 **Request Body:**
@@ -53,7 +65,7 @@ Key Concepts: \
 <summary>Endpoints</summary>
 
 #### 1. Publish a Message
-**Endpoint:** `POST /api/publish-message`  
+**Endpoint:** `POST /pub-sub/publish-message`  
 **Description:** Publishes a message to a specified topic.  
 **Request Body:**
 ```json
@@ -64,7 +76,7 @@ Key Concepts: \
 ```
 
 #### 2. Subscribe to a Topic
-**Endpoint:** `POST /api/subscribe`  
+**Endpoint:** `POST /pub-sub/subscribe`  
 **Description:** Subscribes to a topic with a given subscription name.  
 **Request Body:**
 ```json
@@ -75,20 +87,56 @@ Key Concepts: \
 ```
 
 #### 3. List All Topics
-**Endpoint:** `GET /api/list-topics`  
+**Endpoint:** `GET /pub-sub/list-topics`  
 **Description:** Retrieves a list of all topics.  
 
 #### 4. Create a Topic
-**Endpoint:** `POST /api/create-topic`  
+**Endpoint:** `POST /pub-sub/create-topic`  
 **Description:** Creates a new topic.  
 **Query Parameters:**
 - `topicName` (required): The name of the topic to create.
 
 #### 5. Create a Subscription
-**Endpoint:** `POST /api/create-subscription`  
+**Endpoint:** `POST /pub-sub/create-subscription`  
 **Description:** Creates a subscription for a specified topic.  
 **Query Parameters:**
 - `topicName` (required): The name of the topic.
 - `subscriptionName` (required): The name of the subscription.
+
+</details>
+
+## Cloud Tasks
+Cloud Tasks is a fully managed service that allows you to asynchronously execute tasks in the background. It is commonly used for decoupling heavy or time-consuming operations from the main application flow.
+
+<details>
+<summary>Endpoints</summary>
+
+#### 1. List Tasks
+**Endpoint:** `GET /cloud-tasks/list-cloud-tasks`  
+**Description:** Retrieves a list of all tasks in a specified queue.  
+**Request Body:**
+- `queueName` (required): The name of the queue.
+- `location` (required): The name of the location.
+```json
+{
+    "queueName": "string",
+    "location": "string"
+}
+```
+
+#### 2. Delete a Task
+**Endpoint:** `DELETE /cloud-tasks/delete-task`  
+**Description:** Deletes a task from a specified queue.  
+**Request Body:**
+- `taskName` (required): The name of the task to delete.
+- `queueName` (required): The name of the queue.
+- `location` (required): The name of the location.
+```json
+{
+    "taskName": "string",
+    "queueName": "string",
+    "location": "string"
+}
+```
 
 </details>

@@ -24,14 +24,13 @@ services:
       - "8085:8085"
     networks:
       - app-network
-  cloud-tasks:
-    image: google/cloud-sdk:latest
-    entrypoint: gcloud
-    command: ["beta", "emulators", "tasks", "start", "--host-port=0.0.0.0:9090"]
+  cloud-tasks-emulator:
+    image: ghcr.io/aertje/cloud-tasks-emulator:latest
+    command: ["-host", "0.0.0.0", "-port", "9090", "-queue", "projects/test-project/locations/us-central1/queues/image-queue"]
+    ports:
+      - "9090:9090"
     environment:
       GOOGLE_CLOUD_PROJECT: "test-project"
       CLOUD_TASKS_EMULATOR_HOST: "localhost:9090"
-    ports:
-      - "9090:9090"
     networks:
       - app-network
