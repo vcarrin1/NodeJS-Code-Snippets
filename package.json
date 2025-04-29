@@ -25,6 +25,7 @@
     "@google-cloud/storage": "^7.16.0",
     "@google-cloud/tasks": "^6.0.1",
     "@grpc/grpc-js": "^1.13.3",
+    "adm-zip": "^0.5.16",
     "body-parser": "^2.2.0",
     "express": "^5.1.0",
     "gcp-metadata": "^6.1.1",

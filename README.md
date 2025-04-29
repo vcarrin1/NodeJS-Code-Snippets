@@ -14,9 +14,6 @@ Replace `<bucket-name>` with the name of your storage bucket to access its conte
 <details>
 <summary>Endpoints</summary>
 
-### Description
-
-
 #### 1. Uploads a file
 **Endpoint:** `POST /cloud-storage/upload`  
 **Description:** Uploads a file as a buffer and sends it to Cloud Tasks.
@@ -28,6 +25,7 @@ Replace `<bucket-name>` with the name of your storage bucket to access its conte
 #### 2. Process image
 **Endpoint:** `POST /cloud-tasks/process-image`  
 **Description:**  Process an image from a Cloud Task and upload to Cloud Storage bucket `media_assets`.
+
 **Request Body:**
 - `fileName` (required): File name to be uploaded.
 - `base64Image` (required): The base64-encoded string representation of the image.
@@ -67,6 +65,7 @@ Key Concepts: \
 #### 1. Publish a Message
 **Endpoint:** `POST /pub-sub/publish-message`  
 **Description:** Publishes a message to a specified topic.  
+
 **Request Body:**
 ```json
 {
@@ -78,6 +77,7 @@ Key Concepts: \
 #### 2. Subscribe to a Topic
 **Endpoint:** `POST /pub-sub/subscribe`  
 **Description:** Subscribes to a topic with a given subscription name.  
+
 **Request Body:**
 ```json
 {
