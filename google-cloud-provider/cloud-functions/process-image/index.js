@@ -12,10 +12,9 @@ exports.processImage = async (req, res) => {
         // Decode the base64 image
         const imageBuffer = Buffer.from(base64Image, 'base64');
 
-        // Simulate image processing (e.g., resizing, filtering, etc.)
         console.log(`Processing image: ${fileName} (${imageBuffer.length} bytes)`);
 
-        // Example: Save the processed image to a new path in the bucket
+        // Upload the processed image to Cloud Storage
         const processedFileName = `processed/${fileName}`;
         await uploadBufferToBucket(imageBuffer, processedFileName);
 

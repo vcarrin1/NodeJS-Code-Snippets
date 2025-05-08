@@ -151,11 +151,11 @@ Google Cloud Functions is a serverless compute service provided by Google Cloud 
 3. **Trigger the Function:** Specify the event source that will trigger the function (e.g., HTTP request, Pub/Sub message, or Cloud Storage event).
 4. **Execute and Scale:** When the event occurs, the function is executed, and GCP automatically scales resources as needed.
 
-**Path:** /google-cloud-provider/cloud-functions/process-image
-**Function name:** processImage
-    - the function is designed to process an image and upload it to a Cloud Storage bucket (media_assets)
-    - when we upload an image (http://localhost:3000/cloud-storage/upload), we send the image to cloud tasks
-    - the cloud task posts the image to cloud function endpoint to process the image
-    - this reduces the overload on the service and allows for function to scale up to meed the demand
+**Path:** /google-cloud-provider/cloud-functions/process-image \
+**Function name:** processImage \
+    - the function is designed to process an image and upload it to a Cloud Storage bucket (media_assets) \
+    - when we upload an image (http://localhost:3000/cloud-storage/upload), we send the image to cloud tasks \
+    - the cloud task posts the image to cloud function endpoint to process the image \
+    - this reduces the overload on the service and allows for function to scale up to meed the demand \
 
 ![cloud-function](process-image.png)
