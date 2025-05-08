@@ -34,3 +34,22 @@ services:
       CLOUD_TASKS_EMULATOR_HOST: "localhost:9090"
     networks:
       - app-network
+  functions-emulator:
+    image: gcr.io/google.com/cloudsdktool/cloud-sdk:latest
+    ports:
+      - "8081:8081"
+    volumes:
+      - ${PWD}/google-cloud-provider/cloud-functions/process-image:/functions
+    depends_on:
+      - cloud-tasks-emulator
+    environment:
+      GOOGLE_CLOUD_PROJECT: "test-project"
+      STORAGE_EMULATOR_HOST: "http://gcsstorage:4443"
+    command: sh -c "curl -fsSL https://deb.nodesource.com/setup_22.x | bash - \
+      && apt-get install -y nodejs \
+      && npx @google-cloud/functions-framework --target=processImage --port=8081 --source=/functions --signature-type=http"
+    networks:
+      - app-network
+    
+
+      

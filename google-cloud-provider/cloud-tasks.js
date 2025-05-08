@@ -31,7 +31,8 @@ module.exports.createTask = async (payload) => {
     const task = {
         httpRequest: {
             httpMethod: 'POST',
-            url: 'http://host.docker.internal:3000/cloud-storage/process-image',
+            // url: 'http://host.docker.internal:3000/cloud-storage/process-image', // send to endpoint running in this app
+            url: 'http://host.docker.internal:8081/processImage', // send to cloud function
             body: Buffer.from(JSON.stringify(payload)).toString('base64'),
             headers: {
                 'Content-Type': 'application/json',

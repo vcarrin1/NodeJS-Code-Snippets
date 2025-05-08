@@ -1,0 +1,9 @@
+{
+    "name": "process-image-cloud-function",
+    "main": "index.js",
+    "dependencies": {
+        "@google-cloud/functions-framework": "^4.0.0",
+        "@google-cloud/storage": "^7.16.0"
+    }
+  }
+  
