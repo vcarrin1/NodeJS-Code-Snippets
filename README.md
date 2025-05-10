@@ -29,10 +29,15 @@ Replace `<bucket-name>` with the name of your storage bucket to access its conte
 **Request Body:**
 - `fileName` (required): File name to be uploaded.
 - `base64Image` (required): The base64-encoded string representation of the image.
+- `user` (required): The logged in user
 ```json
 {
     "fileName": "string",
-    "base64Image": "string"
+    "base64Image": "string",
+    "user": {
+        "full_name": "string",
+        "email": "string"
+    }
 }
 ```
 
@@ -160,3 +165,4 @@ Google Cloud Functions is a serverless compute service provided by Google Cloud 
     - this reduces the overload on the service and allows for function to scale up to meed the demand and scale down when the process completes
 
 ![cloud-function](process-image.png)
+![email](email.png)

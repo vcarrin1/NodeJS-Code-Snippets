@@ -26,7 +26,10 @@ exports.processImage = async (req, res) => {
             console.log(`Sending email to ${user.email}`);
             const subject = 'Image Processing Completed';
             const message = `Dear ${user.full_name}, <br/> 
-                Your image ${fileName} has been processed successfully.`;
+                <p>Your image ${fileName} has been processed successfully.</p>
+                <p>You can download it from the following link: 
+                <a href="http://localhost:4443/download/storage/v1/b/media_assets/o/${processedFileName}?alt=media">Download Image</a></p>
+                <p>Best regards,</p>`;
             await sendEmailNotification(user.email, subject, message);
         }
 
