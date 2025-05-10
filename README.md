@@ -156,6 +156,7 @@ Google Cloud Functions is a serverless compute service provided by Google Cloud 
     - the function is designed to process an image and upload it to a Cloud Storage bucket (media_assets) \
     - when we upload an image (http://localhost:3000/cloud-storage/upload), we send the image to cloud tasks \
     - the cloud task posts the image to cloud function endpoint to process the image \
-    - this reduces the overload on the service and allows for function to scale up to meed the demand \
+    - the cloud task also posts the logged in user to cloud function and sends a completion status email \ 
+    - this reduces the overload on the service and allows for function to scale up to meed the demand and scale down when the process completes
 
 ![cloud-function](process-image.png)

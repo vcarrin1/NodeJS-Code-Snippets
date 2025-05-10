@@ -26,7 +26,7 @@ const queue = 'image-queue';
 const queuePath = client.queuePath(project, location, queue);
 
 // Function to create a task
-// createTask({ message: 'Hello, Cloud Tasks!' });
+// createTask({ fileName, base64Image });
 module.exports.createTask = async (payload) => {
     const task = {
         httpRequest: {

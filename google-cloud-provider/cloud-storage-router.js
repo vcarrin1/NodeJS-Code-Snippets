@@ -27,9 +27,13 @@ router.post('/upload', upload.single('file'), async (req, res) => {
     // req.file contains the file data in buffer format
     const fileBuffer = req.file.buffer;
     const fileName = req.file.originalname;
+    const user = {
+        full_name: 'Valentina Carrington',
+        email: 'vcarrin87@gmail.com' 
+    };
     // send image to cloud task
     const base64Image = fileBuffer.toString('base64');
-    await createTask({ fileName, base64Image });
+    await createTask({ fileName, base64Image, user });
     // Log the file name and size
     console.log(`File sent to Cloud Task: ${fileName} (${fileBuffer.length} bytes)`);
     res.send(`File ${fileName} sent to Cloud Task.`);
