@@ -1,10 +1,24 @@
 require('dotenv').config(); // Load environment variables
 
+const express = require('express');
 const { Storage } = require('@google-cloud/storage');
 const nodemailer = require('nodemailer');
 const storage = new Storage();
 
-exports.processImage = async (req, res) => {
+const app = express();
+app.use(express.json());
+
+app.post('/', processImage); // Cloud Run default route
+
+// Optionally, also expose /processImage
+app.post('/processImage', processImage);
+
+const PORT = process.env.PORT || 8080;
+app.listen(PORT, () => {
+    console.log(`Server listening on port ${PORT}`);
+});
+
+async function processImage(req, res) {
    const { fileName, base64Image, user } = req.body;
    
     if (!fileName || !base64Image) {

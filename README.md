@@ -16,7 +16,7 @@ Replace `<bucket-name>` with the name of your storage bucket to access its conte
 
 #### 1. Uploads a file
 **Endpoint:** `POST /cloud-storage/upload`  
-**Description:** Uploads a file as a buffer and sends it to Cloud Tasks.
+**Description:** Uploads a file as a buffer and sends it to Cloud Tasks. \
 **Middleware**: `upload.single('file')` (expects a file field named `file` in the request)
 
 ### Request Body
@@ -42,7 +42,7 @@ Replace `<bucket-name>` with the name of your storage bucket to access its conte
 ```
 
 #### 3. Rename a folder in Google Cloud Storage media_assets bucket.
-**Endpoint:** `POST /cloud-storage/copyFileToNewPath`
+**Endpoint:** `POST /cloud-storage/copyFileToNewPath` \
 **Description:** This endpoint is responsible for copying a file from its current location to a new specified path.
 
 **Request Body:**
@@ -161,7 +161,7 @@ Google Cloud Functions is a serverless compute service provided by Google Cloud 
     - the function is designed to process an image and upload it to a Cloud Storage bucket (media_assets) \
     - when we upload an image (http://localhost:3000/cloud-storage/upload), we send the image to cloud tasks \
     - the cloud task posts the image to cloud function endpoint to process the image \
-    - the cloud task also posts the logged in user to cloud function and sends a completion status email \ 
+    - the cloud task also posts the logged in user to cloud function and sends a completion status email \
     - this reduces the overload on the service and allows for function to scale up to meed the demand and scale down when the process completes
 
 ![cloud-function](process-image.png)
