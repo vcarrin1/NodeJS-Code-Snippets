@@ -6,6 +6,7 @@
   "scripts": {
     "start": "nodemon -r dotenv/config index.js",
     "process-image": "npx @google-cloud/functions-framework --target=processImage",
+    "deploy": "gcloud functions deploy process-image --runtime nodejs22 --trigger-http --allow-unauthenticated --entry-point processImage --source google-cloud-provider/cloud-functions/process-image --region us-west2",
     "test": "run-s unit",
     "unit": "jest --config jest.config.json"
   },
@@ -13,8 +14,8 @@
     "type": "git",
     "url": "git+https://github.com/vcarrin1/NodeJS-Code-Snippets.git"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": ["cloud-functions", "cloud-storage", "secret-manager", "pub/sub", "nodemailer", "cloud-tasks"],
+  "author": "Valentina Carrington",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/vcarrin1/NodeJS-Code-Snippets/issues"

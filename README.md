@@ -166,3 +166,15 @@ Google Cloud Functions is a serverless compute service provided by Google Cloud 
 
 ![cloud-function](process-image.png)
 ![email](email.png)
+
+### Deploy the cloud function to GCP
+* Install gcloud cli: [gcloud cli](https://cloud.google.com/sdk/docs/install)
+* Log in into GCP account
+```bash
+    gcloud auth login --no-launch-browser
+```
+* Run deploy command
+```bash
+    npm run deploy
+```
+![Process Image Cloud Function](cloud-function.png)
