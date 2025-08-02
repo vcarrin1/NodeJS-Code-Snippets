@@ -1,11 +1,14 @@
 require('dotenv').config(); // Load environment variables
 
 const functions = require('@google-cloud/functions-framework');
-const { Storage } = require('@google-cloud/storage');
+// Ensure the uploadBufferToBucket.js file is copied to the correct location before deployment
+// This is done by the predeploy script in package.json
+const { uploadBufferToBucket } = require('./uploadBufferToBucket.js');
 const nodemailer = require('nodemailer');
-const storage = new Storage();
 
-functions.http('processImage', async (req, res) => {
+// Define the Cloud Function
+// This function processes an image uploaded as a base64 string and sends an email notification upon completion
+async function processImage(req, res) {
    const { fileName, base64Image, user } = req.body;
    
     if (!fileName || !base64Image) {
@@ -39,35 +42,22 @@ functions.http('processImage', async (req, res) => {
         console.error(`Error processing image: ${error.message}`);
         res.status(500).send('Error processing image.');
     }
-});
+}
 
-async function uploadBufferToBucket(buffer, bucketPath) {
-    console.log(`Uploading buffer to path ${bucketPath}`);
-    const bucket = storage.bucket('media_assets');
-    const file = bucket.file(bucketPath);
-    const options = {
-        resumable: false,
-        metadata: {
-            contentType: 'application/octet-stream',
-        },
-    };
-    if (!Buffer.isBuffer(buffer)) {
-        throw new TypeError('The provided buffer is not a valid Buffer instance.');
-    }
-    await file.save(buffer, options);
-    console.log(`Buffer uploaded to ${bucketPath}`);
-    return file;
-};
+functions.http('processImage', processImage);
 
 async function sendEmailNotification(email, subject, message) {
-    console.log(`Sending email ${process.env.NODEMAILER_PASSWORD}`);
+    if (!process.env.NODEMAILER_PASSWORD) {
+        throw new Error('NODEMAILER_PASSWORD environment variable is not set.');
+    }
+    console.log(`Sending email with password: ${process.env.NODEMAILER_PASSWORD ? '***' : 'undefined'}`);
     const transporter = nodemailer.createTransport({
         service: 'gmail',
         auth: {
             user: 'vcarrin87@gmail.com',
             // in local env we can se dotenv to load the password
             // in production we should use --set-env flag to set the password during deployment
-            pass: process.env.NODEMAILER_PASSWORD 
+            pass: process.env.NODEMAILER_PASSWORD
         },
     });
 
@@ -85,3 +75,5 @@ async function sendEmailNotification(email, subject, message) {
         console.error(`Error sending email: ${error.message}`);
     }
 }
+
+module.exports = { processImage };

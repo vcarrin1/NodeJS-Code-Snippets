@@ -22,7 +22,7 @@ module.exports = storage;
  * @param {string} bucketPath - The destination path in the bucket.
  * @param {string} bucketName - The name of the bucket (default: 'media_assets').
  */
-module.exports.uploadBufferToBucket = async (buffer, bucketPath, bucketName = process.env.DEFAULT_BUCKET_NAME) => {
+module.exports.uploadBufferToBucket = async (buffer, bucketPath, bucketName = 'media_assets') => {
     console.log(`Uploading buffer to bucket ${bucketName} at path ${bucketPath}`);
     const bucket = storage.bucket(bucketName);
     const file = bucket.file(bucketPath);

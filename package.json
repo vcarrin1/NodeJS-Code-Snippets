@@ -5,10 +5,11 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon -r dotenv/config index.js",
-    "process-image": "npx @google-cloud/functions-framework --target=processImage",
-    "deploy": "gcloud functions deploy process-image --runtime nodejs22 --trigger-http --allow-unauthenticated --entry-point processImage --source google-cloud-provider/cloud-functions/process-image --region us-west2",
     "test": "run-s unit",
-    "unit": "jest --config jest.config.json"
+    "unit": "jest --config jest.config.json",
+    "process-image": "npx @google-cloud/functions-framework --target=processImage",
+    "predeploy": "node copy-files.js",
+    "deploy": "gcloud functions deploy process-image --runtime nodejs22 --trigger-http --allow-unauthenticated --entry-point processImage --source google-cloud-provider/cloud-functions/process-image --region us-west2 --set-env-vars=$(cat .env | grep -v '^#' | xargs | sed 's/ /,/g')"
   },
   "repository": {
     "type": "git",

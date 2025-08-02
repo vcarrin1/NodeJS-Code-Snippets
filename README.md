@@ -11,6 +11,10 @@ http://localhost:4443/storage/v1/b/<bucket-name>/o
 ```
 Replace `<bucket-name>` with the name of your storage bucket to access its contents.
 
+### Running main services in docker-compose on local environment
+```
+    docker-compose -f docker-compose.yaml up -d
+```
 <details>
 <summary>Endpoints</summary>
 
@@ -162,8 +166,12 @@ Google Cloud Functions is a serverless compute service provided by Google Cloud 
     - when we upload an image (http://localhost:3000/cloud-storage/upload), we send the image to cloud tasks \
     - the cloud task posts the image to cloud function endpoint to process the image \
     - the cloud task also posts the logged in user to cloud function and sends a completion status email \
-    - this reduces the overload on the service and allows for function to scale up to meed the demand and scale down when the process completes
+    - this reduces the overload on the service and allows for function to scale up to meed the demand and scale down when the process completes \
+    - the function re-uses a method needed for both main project and the cloud-function. During deployment, we copy the method into
+    its own file inside google-cloud-provider/cloud-functions/process-image as uploadBufferToBucket.js \
+    - the function also needs a secret from .env to send emails, so during deployment we constructs a list of environment variables from the .env file and passes them to the deployment tool using the --set-env-vars flag
 
+![postman-upload](postman-upload.png)
 ![cloud-function](process-image.png)
 ![email](email.png)
 
